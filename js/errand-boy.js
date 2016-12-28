@@ -102,6 +102,14 @@ application.controller('errandBoy', function($scope, $cookies) {
     };
     
     //==============================================================================================
+    // statusUpdate :
+    // called from checkbox click, forces a save (the checkbox itself updates e.status)
+    //==============================================================================================
+    $scope.statusUpdate = function(index) {
+        $scope.saveErrands();
+    }
+    
+    //==============================================================================================
     // delErrand :
     // called from the individual trash buckets, deletes the task that trash bucket is on
     //==============================================================================================

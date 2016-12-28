@@ -21,7 +21,7 @@
                     <span class="state">
                     </span>
                     <span class="info">
-                        <input type="checkbox" ng-model="e.status">
+                        <input type="checkbox" ng-model="e.status" ng-click="statusUpdate($index)">
                         <span contenteditable="false" class="name completed-{{e.status}}" ng-keydown="editEnter($index, 'name')" ng-dblclick="editErrand($index, 'name')" ng-model="e.name">{{e.name}}</span> :: <a ng-click="delErrand($index)"><i class="fa fa-trash-o"></i></a><br>
                         <span ng-keydown="editEnter($index, 'desc')" ng-dblclick="editErrand($index, 'desc')" class="desc" contenteditable="false" ng-model="e.desc">{{e.desc}}</span>
                     </span>
