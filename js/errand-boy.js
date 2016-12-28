@@ -21,7 +21,7 @@ application.controller('errandBoy', function($scope, $cookies) {
     var lastErrands = $cookies.getObject('furgatErrandBoyErrands');
     
     // if cookie errands exist, from a previous session, load them now
-    if ( lastErrands != undefined )
+    if ( lastErrands !== undefined )
         $scope.errands = lastErrands;
     
     //==============================================================================================
@@ -65,24 +65,39 @@ application.controller('errandBoy', function($scope, $cookies) {
     };
     
     //==============================================================================================
-    // saveErrands :
-    // called from the individual edit buttons, allows tasks to be edited with contenteditable
+    // editErrands :
+    // called from ng-dblclick, allows errand names, descs to be edited with contenteditable
     //==============================================================================================
-    $scope.editErrand = function(index) {
+    $scope.editErrand = function(index, kind) {
         var editValue = event.target.contentEditable; // we don't need to constantly refer to event
-        
+
         // set the value to the opposite, it's expecting a string though
         editValue = editValue == 'false' ? 'true' : 'false';
      
-        if (editValue == 'false')
-            $scope.saveErrands(); // save after closing only
+        if (editValue == 'false') {
+            var tempString = event.target.innerHTML; // the edited contents of the element
+            
+            if ( kind == 'name') { // find out where we should store this
+                $scope.errands[index].name = tempString;
+            } else {
+                $scope.errands[index].desc = tempString;
+            }
+                
+            $scope.saveErrands(); // save errands after storing the new input
+        }
         
-        event.target.contentEditable = editValue; // save the value out
+        event.target.contentEditable = editValue; // alter content editable on the element
     };
     
-    $scope.editEnter = function(text) {
-        if (event.which == 13 && text != '' && text != undefined) {
-            $scope.editErrand()
+    //==============================================================================================
+    // editEnter :
+    // processes 'enter' keypress when editing, calls editErrand to close and save
+    // the reason for re-using editErrand is that it can still be called on ng-dbclick even
+    // when open, so we want both dblclick and enter presses to behave properly
+    //==============================================================================================
+    $scope.editEnter = function(index, kind) {
+        if (event.which == 13) {
+            $scope.editErrand(index, kind)
         }
     };
     
