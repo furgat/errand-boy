@@ -1,0 +1,41 @@
+<! DOCTYPE html>
+<html lang="en" ng-app="furgatErrandBoy">
+<head>
+    <meta charset="UTF-8">
+    <title>Errand Boy | v1.0.Atomic</title>
+    <!-- necessary angular libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+    <!-- fontawesome for icon support -->
+    <script src="https://use.fontawesome.com/59a6d08232.js"></script>
+    <!-- my assets and code -->
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/errand-boy.js"></script>
+</head>
+<body>
+    <div ng-controller="errandBoy">
+        <h1>Errand Boy:</h1>
+        <p>
+            <ul>
+                <li data-ng-repeat="e in errands track by $index">
+                    <span class="state">
+                    </span>
+                    <span class="info">
+                        <input type="checkbox" ng-model="e.status">
+                        <span contenteditable="false" class="completed-{{e.status}}" ng-keydown="editEnter(e.name)" ng-dblclick="editErrand($index)" ng-model="e.name">{{e.name}}</span> :: <a ng-click="delErrand($index)"><i class="fa fa-trash-o"></i></a><br>
+                        <span contenteditable="false" ng-model="e.desc">{{e.desc}}</span>
+                    </span>
+                </li>
+            </ul>
+        </p>
+        <p>
+            <form>
+                <h2>Add a Task:</h2>
+                <input type="text" ng-model="errandForm.name" value="Enter your Errand Name" placeholder="Errand Name,,,"/><br>
+                <textarea ng-model="errandForm.desc" placeholder="Description (Optional),,,"></textarea><br>
+                <button ng-click="addErrand($event)">Confirm</button>
+            </form>
+        </p>
+    </div>
+</body>
+</html>
