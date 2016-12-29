@@ -4,21 +4,114 @@
     margin: 0 auto; font-family: 'Open Sans', sans-serif;
 }
 
+body {
+    background-color: #333;
+}
+
+/* core styles */
+#core {
+    column-count: 1;
+    column-width: 100%;
+    width: 90%;
+}
+
+/* reporter div styles */
+#reporter ul {
+    padding: 0;
+}
+
+#reporter li {
+    list-style: none; padding: 0.5em; overflow: auto; border-bottom: 2px solid #333;
+}
+
+#reporter li.green { 
+    background-color: aquamarine;
+}
+
+#reporter li.pink { 
+    background-color: #FF99CC;
+}
+
+#reporter span.close {
+    cursor: pointer;
+    margin-right: 0.5em;
+}
+
+/* adder div styles */
+#adder form {
+    background-color: #666; padding: 0.5em 1em 1em 1em; color: #EEE; border-top: 0.5em solid aquamarine;
+}
+
+#adder input[type="text"], textarea {
+    width: 100%; background-color: #DDD; border: 2px solid #333; margin-top: 0.5em;
+    color: #333; padding: 5pt; font-size: 12pt;
+}
+
+#adder button {
+    width: 100%; height: 2em; font-size: 10pt; background-color: aquamarine;
+    border: 0px; margin-top: 0.5em; font-size: 12pt;
+}
+
+#adder i.fa-plus-circle {
+    color: aquamarine;
+    font-size: 12pt;
+    margin: 0.5em;
+}
+
+#adder a { 
+    color: aquamarine;
+    cursor: pointer;
+}
+
+/* tracker div styles */
 #tracker ul { 
-    padding: 1em 0em 1em 0em; background-color: #333; 
+    padding: 0.25em 0em 1em 0em; background-color: #333; 
 }
 
 #tracker li { 
-    list-style: none; padding: 0.5em; overflow: auto; 
-    background-color: #666; border-bottom: 2px solid #333; 
+    list-style: none; overflow: auto; 
+    background-color: #666; border-bottom: 2px solid #333;
+    width: 100%;
 }
 
-span.state, span.info { 
-    display: block; float: left; 
+span.info { 
+    display: block;
+    margin: 0; width: 100%;
+    line-height: 32px;
+    margin: 0pt 2pt 4pt 2pt;
+    overflow: auto;
+}
+
+span.state {
+    display: block;
+    margin: 0; 
+    width: 32px; height: 32px;
+    float: left;
+}
+
+span.name {
+    display: block;
+    font-weight: bold;
+    color: #DDD;
+    float: left;
+}
+
+#tracker a.trash {
+    color: #FFCC00; float: right; display: block; cursor: pointer;
+    margin-top: 3pt;
+    margin-right: 5pt;
+}
+
+span.desc {
+    display: block; padding: 3pt;
+    color: #FFF;
+    background-color: gray;
+    font-size: 10pt;
+    line-height: 12pt;
 }
 
 span.completed-true { 
-    color: gray; font-style: italic; text-decoration: line-through; 
+    color: aquamarine; font-style: italic; text-decoration: line-through; font-weight: normal;
 }
 
 span[contenteditable="true"] { 
@@ -32,6 +125,7 @@ input[type="checkbox"] {
 input[type="checkbox"] + label span { 
     display: inline-block; width: 32px; height: 32px; 
     background:url('../img/checkboxes.png') 0px 0px no-repeat; 
+    margin-top: 2pt;
     cursor: pointer; vertical-align: middle; 
 }
 

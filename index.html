@@ -13,29 +13,73 @@
     <script src="js/errand-boy.js"></script>
 </head>
 <body>
-    <div ng-controller="errandBoy">
-        <h1>Errand Boy:</h1>
-        <div id="tracker">
-            <ul>
-                <li data-ng-repeat="e in errands track by $index">
-                    <span class="state">
-                        <input id="{{'status-' + $index}}" type="checkbox" ng-model="e.status" ng-click="statusUpdate($index)">
-                        <label for="{{'status-' + $index}}"><span></span></label>
+    <div id="core" ng-controller="errandBoy">
+        <div id="reporter">
+            <ul ng-repeat="r in reports track by $index">
+                <li class="{{r.color}}">
+                    <span class="close">
+                        <a ng-click="delReport($index)"><i class="fa fa-window-close-o"></i></a>
                     </span>
-                    <span class="info">
-                        <span contenteditable="false" class="name {{'completed-' + e.status}}" ng-keydown="editEnter($index, 'name')" ng-dblclick="editErrand($index, 'name')" ng-model="e.name">{{e.name}}</span> :: <a ng-click="delErrand($index)"><i class="fa fa-trash-o"></i></a><br>
-                        <span ng-keydown="editEnter($index, 'desc')" ng-dblclick="editErrand($index, 'desc')" class="desc" contenteditable="false" ng-model="e.desc">{{e.desc}}</span>
+                    <span class="message">
+                        {{r.message}}
                     </span>
                 </li>
             </ul>
         </div>
+        
         <div id="adder">
-            <form>
-                <h2>Add a Task:</h2>
-                <input type="text" ng-model="errandForm.name" value="Enter your Errand Name" placeholder="Errand Name,,,"/><br>
-                <textarea ng-model="errandForm.desc" placeholder="Description (Optional),,,"></textarea><br>
-                <button ng-click="addErrand($event)">Confirm</button>
+            <span>
+                <a ng-click="toggleAdd()"><i class="fa fa-plus-circle"></i> Toggle Errand Form</a>
+            </span>
+            
+            <form ng-show="adding">
+                <p>Create a new Errand ::</p>
+                <input 
+                    type="text" 
+                    ng-model="errandForm.name" 
+                    placeholder="Errand Name,,,"
+                >
+                <textarea ng-model="errandForm.desc" placeholder="Description (Optional),,,"></textarea>
+                <button ng-click="addErrand($event)">CONFIRM</button>
             </form>
+        </div>
+        
+        <div id="tracker">
+            <ul>
+                <li ng-repeat="e in errands track by $index">
+                    <span class="info">
+                        <span class="state">
+                            <input 
+                                id="{{'status-' + $index}}" 
+                                type="checkbox" 
+                                ng-model="e.status" 
+                                ng-click="statusUpdate($index)"
+                            >
+                            <label for="{{'status-' + $index}}"><span></span></label>
+                        </span>
+                        <span 
+                            class="name {{'completed-' + e.status}}"
+                            contenteditable="false"  
+                            ng-keydown="editEnter($index, 'Name')" 
+                            ng-dblclick="editErrand($index, 'name')" 
+                            ng-model="e.name"
+                        >
+                            
+                            :: {{e.name}}
+                        </span>
+                        <a class="trash" ng-click="delErrand($index)"><i class="fa fa-trash-o"></i></a>
+                    </span>
+                    <span 
+                        class="desc"
+                        ng-keydown="editEnter($index, 'Description')" 
+                        ng-dblclick="editErrand($index, 'desc')"
+                        contenteditable="false" 
+                        ng-model="e.desc"
+                    >
+                        {{e.desc}}
+                    </span>
+                </li>
+            </ul>
         </div>
     </div>
 </body>

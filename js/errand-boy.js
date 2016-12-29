@@ -1,4 +1,5 @@
 var application = angular.module('furgatErrandBoy', ['ngCookies']);
+var appversion = '1.0.Atomic';
 
 application.controller('errandBoy', function($scope, $cookies) {
     
@@ -15,7 +16,23 @@ application.controller('errandBoy', function($scope, $cookies) {
     //      }
     // ]
     $scope.errands = [];
+    
+    // declare our reports
+    // reports are formatted as follows
+    // [
+    //      {
+    //          'message' : 'string',
+    //          'color' : 'string'
+    //      }
+    // ]
+    $scope.reports = [];
+    
+    // initialize form array
     $scope.errandForm = {};
+    
+    // set form to hidden
+    $scope.adding = false;
+    
     
     // attempt to load previous errands from cookies
     var lastErrands = $cookies.getObject('furgatErrandBoyErrands');
@@ -36,17 +53,24 @@ application.controller('errandBoy', function($scope, $cookies) {
     };
     
     //==============================================================================================
+    // toggleAdd :
+    // called from the toggle frontend button, enables/disables the errand form
+    //==============================================================================================
+    $scope.toggleAdd = function() {
+        var tempBool = $scope.adding;
+        $scope.adding = !tempBool;
+    }
+    
+    //==============================================================================================
     // addErrand : 
     // called from the form button, takes filled in data to add a new errand
     //==============================================================================================
     $scope.addErrand = function(obj) {
-        // report progress indicator to user somehow
         // temporary variable to store user input
         var temps = [$scope.errandForm.name, $scope.errandForm.desc];
         
-        if ( temps[0] == undefined ) { // reject blank name input, blank description is fine
-            // better fail state reporting later
-            console.log('failed, please add descriptive text,,');
+        if ( temps[0] == undefined || temps[0] == '' ) { // reject blank name input, blank description is fine
+            $scope.report('You must at least enter a Name for your errand,', 'pink');
         } else {
             // should report on success state as well
             $scope.errands.push({
@@ -59,6 +83,9 @@ application.controller('errandBoy', function($scope, $cookies) {
             $scope.errandForm.name = '';
             $scope.errandForm.desc = '';
 
+            // report success
+            $scope.report('New Errand created successfully!', 'green');
+            
             $scope.saveErrands(); // save after adding a new task
         }
     };
@@ -76,13 +103,23 @@ application.controller('errandBoy', function($scope, $cookies) {
         if (editValue == 'false') {
             var tempString = event.target.innerHTML; // the edited contents of the element
             
-            if ( kind == 'name') { // find out where we should store this
-                $scope.errands[index].name = tempString;
+            // only name is required on addition, but we don't want people to zero out their
+            // descriptions at this point either,, so catch any blank input
+            if ( tempString == undefined || tempString == '' ) {
+                editValue = 'true'; // force editing to continue
+                // report error
+                $scope.report('Warning: Please insert a value for Name,,', 'pink');
+                // placeholder so that the user doesn't lose the box
+                event.target.innerHTML = '[Insert ' + kind + ']';
             } else {
-                $scope.errands[index].desc = tempString;
-            }
+                if ( kind == 'Name') { // find out where we should store this
+                    $scope.errands[index].name = tempString;
+                } else {
+                    $scope.errands[index].desc = tempString;
+                }
                 
-            $scope.saveErrands(); // save errands after storing the new input
+                $scope.saveErrands(); // save errands after storing the new input
+            }
         }
         
         event.target.contentEditable = editValue; // alter content editable on the element
@@ -118,6 +155,25 @@ application.controller('errandBoy', function($scope, $cookies) {
     };
     
     //==============================================================================================
+    // report :
+    // internally used to add a new report to the ticker
+    //==============================================================================================
+    $scope.report = function(msg, color) {
+        $scope.reports.push({
+            'message' : msg,
+            'color' : color
+        });
+    }
+    
+    //==============================================================================================
+    // delReport :
+    // called from the close button in the ui to remove a report from the ticker
+    //==============================================================================================
+    $scope.delReport = function(index) {
+        $scope.reports.splice(index, 1);
+    }
+    
+    //==============================================================================================
     // clearAllData :
     // called from the clear button, removes all tasks and resets the cookie
     //==============================================================================================
@@ -127,4 +183,7 @@ application.controller('errandBoy', function($scope, $cookies) {
         // completely empty the cookie by saving the empty list
         $scope.saveTasks();
     };
+    
+    // welcome the user
+    $scope.report('Welcome to Errand-Boy (ver. ' + appversion + ')', 'green');
 });
