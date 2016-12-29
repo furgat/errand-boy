@@ -29,7 +29,6 @@ application.controller('errandBoy', function($scope, $cookies) {
     // helper function, saves out the array of errands into a cookie using $cookies
     //==============================================================================================
     $scope.saveErrands = function () {
-        console.log($scope.errands);
         // wrap in a try-catch block?
         // save to cookies
         $cookies.putObject('furgatErrandBoyErrands', $scope.errands);    
