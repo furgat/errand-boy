@@ -69,31 +69,15 @@ body {
 }
 
 #tracker li { 
-    list-style: none; overflow: auto; 
+    list-style: none; 
+    overflow: hidden; 
     background-color: #666; border-bottom: 2px solid #333;
     width: 100%;
 }
 
-span.info { 
+#tracker span {
     display: block;
-    margin: 0; width: 100%;
-    line-height: 32px;
-    margin: 0pt 2pt 4pt 2pt;
-    overflow: auto;
-}
-
-span.state {
-    display: block;
-    margin: 0; 
-    width: 32px; height: 32px;
-    float: left;
-}
-
-span.name {
-    display: block;
-    font-weight: bold;
-    color: #DDD;
-    float: left;
+    margin: 0;
 }
 
 #tracker a.trash {
@@ -102,8 +86,26 @@ span.name {
     margin-right: 5pt;
 }
 
+span.info { 
+    width: 100%;
+    line-height: 32px;
+    margin: 0pt 2pt 4pt 2pt;
+    overflow: hidden;
+}
+
+span.state {
+    width: 32px; height: 32px;
+    float: left;
+}
+
+span.name {
+    font-weight: bold;
+    color: #DDD;
+    float: left;
+}
+
 span.desc {
-    display: block; padding: 3pt;
+    padding: 3pt;
     color: #FFF;
     background-color: gray;
     font-size: 10pt;
