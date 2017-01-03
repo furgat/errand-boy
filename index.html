@@ -1,7 +1,8 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" ng-app="furgatErrandBoy">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Errand Boy | v1.0.Atomic</title>
     <!-- necessary angular libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
@@ -29,7 +30,8 @@
         
         <div id="adder">
             <span>
-                <a ng-click="toggleAdd()"><i class="fa fa-plus-circle"></i> Toggle Errand Form</a>
+                <a class="green" ng-click="toggleAdd()"><i class="fa fa-plus-circle"></i> Toggle Errand Form</a>
+                <a class="yellow" ng-click="clearAllData()"><i class="fa fa-minus-circle"></i> Clear All Data</a>
             </span>
             
             <form ng-show="adding">

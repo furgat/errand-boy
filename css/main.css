@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 * { 
+    box-sizing: border-box;
     margin: 0 auto; font-family: 'Open Sans', sans-serif;
 }
 
@@ -52,16 +53,27 @@ body {
     border: 0px; margin-top: 0.5em; font-size: 12pt;
 }
 
-#adder i.fa-plus-circle {
-    color: aquamarine;
-    font-size: 12pt;
-    margin: 0.5em;
+#adder span { 
+    width: 100%;
 }
 
 #adder a { 
-    color: aquamarine;
     cursor: pointer;
+    display: inline-block;
+
+    border: 1px solid #333;
+    padding: 0.5em 1em 0.5em 1em;
 }
+
+#adder a:hover {
+    background-color: dimgray;
+}
+
+#adder a.green { color: aquamarine; }
+#adder a.green:hover { border: 1px solid aquamarine; }
+
+#adder a.yellow { color: #FFCC00; }
+#adder a.yellow:hover { border: 1px solid #FFCC00; }
 
 /* tracker div styles */
 #tracker ul { 
@@ -133,4 +145,14 @@ input[type="checkbox"] + label span {
 
 input[type="checkbox"]:checked + label span {
     background:url('../img/checkboxes.png') -32px top no-repeat;
+}
+
+/* responsive overrides */
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    #adder a {
+        width: 100%;
+        margin-right: 0em;
+        text-align: center;
+    }
 }
